@@ -1,0 +1,17 @@
+{
+  "name": "Womb-Defender",
+  "version": "1.0.0",
+  "description": "Server for leaderboards",
+  "main": "server.js",
+  "scripts": {
+    "run": "node server.js"
+  },
+  "author": "Ehimare Okoyomon and Zuheir Al Sagha",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "knex": "^0.12.6",
+    "pg": "^6.1.2"
+  }
+}
