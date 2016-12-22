@@ -4,6 +4,7 @@ var config = require('./config');
 var pg = require('pg');
 var knexfile = require('./knexfile');
 var knex = require('knex')(knexfile);
+var path = require('path');
 
 var app = express();
 //var router = require('./index');
@@ -12,6 +13,14 @@ var env = config.environment;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+
+app.get('/', function(req, res) {
+  res.sendFile(path.join(__dirname, 'main.html'), {}, function (err) {
+    if (err) {
+      console.log("it didnt work");
+    }
+  })
+});
 
 app.post('/scores', function(req, res) {
   // Vulnerable to SQL injection, but lol we dont even authenticate so obvi we dont care.
