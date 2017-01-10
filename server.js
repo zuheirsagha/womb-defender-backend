@@ -11,6 +11,8 @@ var app = express();
 var port = config.port;
 var env = config.environment;
 
+knex.migrate.latest([knexfile]);
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
