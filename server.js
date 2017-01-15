@@ -25,6 +25,7 @@ app.get('/', function(req, res) {
 });
 
 app.post('/scores', function(req, res) {
+  req.body = JSON.parse(req.body);
   console.log(req);
   if (!(req.body.username && req.body.score && !isNaN(req.body.score) && /^\d+$/.test(req.body.score) && req.body.country)) {
     // console.log(req.body.userName);
