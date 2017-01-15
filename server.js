@@ -25,7 +25,7 @@ app.get('/', function(req, res) {
 });
 
 app.post('/scores', function(req, res) {
-  console.log(req);
+  console.log(req.body);
   if (!(req.body.username && req.body.score && !isNaN(req.body.score) && /^\d+$/.test(req.body.score) && req.body.country)) {
     // console.log(req.body.userName);
     // console.log(req.body.score);
