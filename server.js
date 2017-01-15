@@ -26,7 +26,7 @@ app.get('/', function(req, res) {
 
 app.post('/scores', function(req, res) {
   console.log(req);
-  if (!(req.body.userName && req.body.score && !isNaN(req.body.score) && /^\d+$/.test(req.body.score) && req.body.country)) {
+  if (!(req.body.username && req.body.score && !isNaN(req.body.score) && /^\d+$/.test(req.body.score) && req.body.country)) {
     // console.log(req.body.userName);
     // console.log(req.body.score);
     // console.log(isNaN(req.body.score));
@@ -36,7 +36,7 @@ app.post('/scores', function(req, res) {
     return res.status(400).json({error: 'Missing/invalid data'});
   }
 
-  var score = {user: req.body.userName, score: req.body.score, country: req.body.country};
+  var score = {user: req.body.username, score: req.body.score, country: req.body.country};
   // dont return anything cuz we dont need it but we can. Res should be empty
   console.log("gets here");
   knex('scores').insert(score)
