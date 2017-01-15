@@ -25,16 +25,22 @@ app.get('/', function(req, res) {
 });
 
 app.post('/scores', function(req, res) {
-  // Vulnerable to SQL injection, but lol we dont even authenticate so obvi we dont care.
-  // For location can either have country on device and send that or use their lat/lng here
-  if (!(req.body.userName && req.body.score && !isNaN(req.body.score) && (req.body.score === parseInt(req.body.score))) /* Add a check for country/location */) {
+  if (!(req.query.userName && req.query.score && !isNaN(req.query.score) && /^\d+$/.test(req.query.score) && req.query.country)) {
+    console.log(req.query.userName);
+    console.log(req.query.score);
+    console.log(isNaN(req.query.score));
+    console.log(parseInt(req.query.score));
+    console.log(req.query.country);
+    console.log(req.query.score === parseInt(req.query.score));
     return res.status(400).json({error: 'Missing/invalid data'});
   }
-  // use geocoder on location, hardcoded to Canada rn
-  var score = {user: req.body.userName, score: req.body, country: 'canada'};
+
+  var score = {user: req.query.userName, score: req.query.score, country: req.query.country};
   // dont return anything cuz we dont need it but we can. Res should be empty
+  console.log("gets here");
   knex('scores').insert(score)
     .then((result) => {
+      console.log("gets in here");
       return res.status(201).json({success: 'Successfully added score'});
     })
     .catch((error) => {
@@ -45,7 +51,7 @@ app.post('/scores', function(req, res) {
 
 app.get('/scores', function(req, res) {
   if (req.query.type === 'country') {
-    if (!(req.query.country/* whatever we use for location*/)) {
+    if (!(req.query.country)) {
       return res.status(400).json({error: 'Missing/invalid data'});
     }
     knex.select().from('scores').where({country: req.query.country})
